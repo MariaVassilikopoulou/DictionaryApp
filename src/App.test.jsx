@@ -4,22 +4,7 @@ import userEvent from '@testing-library/user-event';
 import DictionaryApp from './components/DictionaryApp'; 
 import { test, expect,describe } from 'vitest';
 import App from './App'
-import { afterEach, beforeAll, afterAll } from 'vitest';
-import { setupServer } from "msw/node";
-import { http} from "msw";
-import example from './example.json';
 
-
-const server = setupServer(
-  http.get('https://api.dictionaryapi.dev/api/v2/entries/en/:word', (req, res, ctx) =>
-    res(ctx.json(example))
-  )
-)
-
-
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
 
 describe('App Component', () => {
  test('should display an error message when input is empty and search is clicked', async () => {
@@ -50,6 +35,28 @@ describe('App Component', () => {
   
   
   });
+
+  test('should display an audio player if the phonetic audio file exists', async () => {
+    // Render the component
+    render(<DictionaryApp />);
+
+    // Find the input box and type a word
+    const input = screen.getByRole('textbox');
+    await userEvent.type(input, 'example');  // The word 'example' has an audio file
+
+    // Click the search button
+    const searchButton = screen.getByRole('button', { name: /search/i });
+    await userEvent.click(searchButton);
+
+    // Wait for the API response to update the DOM
+    await waitFor(() => {
+      screen.debug();  // This will log the current state of the DOM
+      const audioPlayer = screen.getByTestId('audio-player');
+      expect(audioPlayer).toBeInTheDocument();
+    });
+  });
+
+
   
 /*test('should display word and definition after submission', async () => {
   render(<DictionaryApp />);

@@ -1,7 +1,4 @@
 import  {useState} from 'react'
-
-
-
 const DictionaryApp = () => {
   const [word, setWord] = useState('');
   const [definition, setDefinition] = useState(null);
@@ -72,7 +69,7 @@ const DictionaryApp = () => {
             {definition.phonetics && definition.phonetics.length > 0 && definition.phonetics[0].audio && (
               <div>
                  {/*<p>Phonetic: {definition.phonetics[0].text}</p>*/}
-                <audio controls>
+                <audio controls  data-testid="audio-player">
                   <source src={definition.phonetics[0].audio} type='audio/mpeg' />
                  
                 </audio>

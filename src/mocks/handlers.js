@@ -1,4 +1,4 @@
-import { http } from 'msw';
+/*import { http } from 'msw';
 
 export const handlers = [
   http.get('https://api.dictionaryapi.dev/api/v2/entries/en/:word', (req, res, ctx) => {
@@ -44,4 +44,6 @@ export const handlers = [
       return res(ctx.status(404), ctx.json({ message: "Word not found" }));
     }
   }),
-];
+];*/
+
+
