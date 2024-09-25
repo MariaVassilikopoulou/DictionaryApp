@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom/vitest'
-/*import { setupServer } from 'msw/node';
+import { setupServer } from 'msw/node';
 import { handlers } from './src/mocks/handlers';
 import { afterEach, beforeAll, afterAll } from 'vitest';
 const server = setupServer(...handlers);
@@ -11,7 +11,7 @@ beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 
 // Close the server after all tests are done
-afterAll(() => server.close());*/
+afterAll(() => server.close());
 
 
 
