@@ -5,7 +5,7 @@ const ToastContainer = ({ message, onClose }) => {
   useEffect(() => {
     if (message) {
       const timer = setTimeout(() => {
-        onClose(); // Clear toast after 3 seconds
+        onClose(); 
       }, 3000);
       return () => clearTimeout(timer);
     }

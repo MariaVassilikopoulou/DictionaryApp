@@ -1,5 +1,5 @@
 // Variables for easy color customization
-$primary-color: #41214a;
+$primary-color: #5a2e66;
 $secondary-color: #5d2a8c;
 $highlight-color: rgb(103, 30, 103);
 $background-color: #f0f0f0;
@@ -42,14 +42,6 @@ $input-focus-border-color: $highlight-color;
   
 }
 
-/*@keyframes slideIn {
-  0% {
-    transform: translateY(-100%);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}*/
 
 .title h1 {
   font-size: 2rem;
@@ -58,14 +50,6 @@ $input-focus-border-color: $highlight-color;
   animation: fadeIn 1s ease;
 }
 
-/*@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}*/
 
 input {
   padding: 12px;
@@ -116,7 +100,7 @@ button {
   max-height: 100px;
   overflow-y: auto;
   scrollbar-width: thin;
-  scroll-behavior: smooth; /* Firefox */
+  scroll-behavior: smooth; 
   &::-webkit-scrollbar {
     width: 6px;
     
@@ -168,14 +152,15 @@ button {
   }
 }
 
-// Toast notification styling
+
 .toast-container {
   position: fixed;
   bottom: 20px;
-  left: 50%;
+  left: 49%;
   transform: translateX(-50%);
   z-index: 9999;
   pointer-events: none;
+  border: 1px solid $input-border-color;
 }
 
 .toast {
@@ -185,17 +170,9 @@ button {
   border-radius: 8px;
   margin-top: 10px;
   animation: toastAnimation 0.5s ease;
+  font-weight: bold;
 }
 
-/*@keyframes toastAnimation {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }*/
 
   @media (max-width: 480px) {
     .container div {

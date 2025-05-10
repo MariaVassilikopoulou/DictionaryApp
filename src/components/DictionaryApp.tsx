@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { saveSearchTerm ,getFavorites, saveFavorite, removeFavorite} from "../utils/localStorage";
 import ToastContainer from './ToastContainer';
 import RecentSearches from "./ResentSearches";
-import Favorites from './Favorites';
+
 
 type Definition = {
   word: string;
@@ -24,7 +24,9 @@ const DictionaryApp = () => {
   const [synonyms, setSynonyms]= useState<string[]>([]);
   const [favorites, setFavorites] = useState<string[]>([]);
 
-
+  useEffect(() => {
+    setFavorites(getFavorites());
+  }, []);
 
 // Fetch Synonyms from Datamuse API
 const fetchSynonyms = async (word) => {
@@ -79,17 +81,17 @@ const fetchSynonyms = async (word) => {
 
    // Add to favorites (localStorage)
    const addToFavorites = (word: string) => {
-    setFavorites(saveFavorite(word));
+    const updated = saveFavorite(word);
+    setFavorites(updated);
   };
   
     
   const removeFromFavorites = (word: string) => {
-    setFavorites(removeFavorite(word));
+    const updated = removeFavorite(word);
+    setFavorites(updated);
   };
 
-  useEffect(() => {
-    setFavorites(getFavorites());
-  }, []);
+
 
 
   const handleRecentClick = (word) => {
@@ -127,17 +129,17 @@ const fetchSynonyms = async (word) => {
               </div>
             )}
              {synonyms.length > 0 && (
-  <div className="synonyms-list">
-    <h3>Synonyms:</h3>
-    <div className="synonymListContainer">
-      <ul>
-        {synonyms.map((synonym, index) => (
-          <li key={index} className="synonymItem">{synonym}</li>
-        ))}
-      </ul>
-    </div>
-  </div>
-)}
+            <div className="synonyms-list">
+            <h3>Synonyms:</h3>
+            <div className="synonymListContainer">
+            <ul>
+            {synonyms.map((synonym, index) => (
+            <li key={index} className="synonymItem">{synonym}</li>
+              ))}
+              </ul>
+             </div>
+            </div>
+           )}
             {/* Display phonetic and audio if available */}
             {definition.phonetics && definition.phonetics.length > 0 && definition.phonetics[0].audio && (
               <div>
@@ -154,9 +156,10 @@ const fetchSynonyms = async (word) => {
           </div>
         )}
   
-  <RecentSearches onSelect={handleRecentClick} />
+        <RecentSearches onSelect={handleRecentClick} 
+                  favorites={favorites}
+                  onRemoveFavorite={removeFromFavorites}/>
         </div>
-      
       </section>
     );
   };

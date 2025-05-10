@@ -1,4 +1,3 @@
-// Variables for easy color customization
 $primary-color: #41214a;
 $secondary-color: #5d2a8c;
 $highlight-color: rgb(103, 30, 103);
@@ -8,21 +7,21 @@ $white-color: #fff;
 $input-border-color: #ddd;
 $input-focus-border-color: $highlight-color;
 .accordion-wrapper {
-    margin-top: 2rem;
+    margin-top: 1rem;
   }
   
   .accordion-section {
     margin-bottom: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+   // border: 1px solid #ddd;
+    border-radius: 4px;
     padding: 0.5rem;
-    background: #f9f9f9;
+    background: $background-color;
   }
   
   .accordion-toggle {
-    background: transparent;
+    //background: transparent;
     border: none;
-    font-weight: bold;
+    font-weight:lighter;
     cursor: pointer;
     margin-bottom: 0.5rem;
     font-size: 1rem;
