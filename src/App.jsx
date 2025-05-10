@@ -1,12 +1,15 @@
-import './App.css'
-import DictionaryApp from './components/DictionaryApp'
+import './styles/App.scss';
+import DictionaryApp from './components/DictionaryApp';
+
+
 
 function App() {
- 
 
+ 
   return (
     <>
-     <DictionaryApp/>
+     <DictionaryApp />
+   
     </>
   )
 }
