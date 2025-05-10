@@ -1,14 +1,28 @@
+import React from 'react';
 import  {useState, useEffect} from 'react'
 import { motion } from 'framer-motion';
-import { saveSearchTerm } from "../utils/localStorage";
+import { saveSearchTerm ,getFavorites, saveFavorite, removeFavorite} from "../utils/localStorage";
 import ToastContainer from './ToastContainer';
 import RecentSearches from "./ResentSearches";
+import Favorites from './Favorites';
+
+type Definition = {
+  word: string;
+  phonetics?: { text?: string; audio?: string }[];
+  meanings: {
+    partOfSpeech: string;
+    definitions: {
+      definition: string;
+    }[];
+  }[];
+};
+
 const DictionaryApp = () => {
-  const [word, setWord] = useState('');
-  const [definition, setDefinition] = useState(null);
-  const [error, setError] = useState(null);
-  const [synonyms, setSynonyms]= useState([]);
-  const [favorites, setFavorites] = useState([]);
+  const [word, setWord] = useState<string>('');
+  const [definition, setDefinition] =useState<Definition | null>(null);
+  const [error, setError] = useState<string | null>(null);;
+  const [synonyms, setSynonyms]= useState<string[]>([]);
+  const [favorites, setFavorites] = useState<string[]>([]);
 
 
 
@@ -64,25 +78,17 @@ const fetchSynonyms = async (word) => {
 
 
    // Add to favorites (localStorage)
-   const addToFavorites = (word) => {
-    setFavorites((prevFavorites) => {
-      const updatedFavorites = [...prevFavorites, word];
-      localStorage.setItem('favorites', JSON.stringify(updatedFavorites)); // Save to localStorage
-      return updatedFavorites;
-    });
+   const addToFavorites = (word: string) => {
+    setFavorites(saveFavorite(word));
   };
-   // Remove from favorites
-   const removeFromFavorites = (word) => {
-    setFavorites((prevFavorites) => {
-      const updatedFavorites = prevFavorites.filter((item) => item !== word);
-      localStorage.setItem('favorites', JSON.stringify(updatedFavorites)); // Update in localStorage
-      return updatedFavorites;
-    });
+  
+    
+  const removeFromFavorites = (word: string) => {
+    setFavorites(removeFavorite(word));
   };
-   // Load favorites from localStorage on mount
-   useEffect(() => {
-    const savedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
-    setFavorites(savedFavorites);
+
+  useEffect(() => {
+    setFavorites(getFavorites());
   }, []);
 
 
@@ -92,11 +98,11 @@ const fetchSynonyms = async (word) => {
   };
 
   return (
-    <section className='container' >{/*initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>*/}
+    <section className='container'>
     <div>
-      <motion.h1 className="title" initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 0.5 }}>
+      <motion.div className="title" initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 0.5 }}>
         <h1>Dictionary App</h1>
-        </motion.h1>
+      </motion.div>
         <input
           type='text'
           placeholder='Search a word here'
@@ -121,15 +127,17 @@ const fetchSynonyms = async (word) => {
               </div>
             )}
              {synonyms.length > 0 && (
-              <div>
-                <h3>Synonyms:</h3>
-                <ul>
-                  {synonyms.map((synonym, index) => (
-                    <li key={index}>{synonym}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
+  <div className="synonyms-list">
+    <h3>Synonyms:</h3>
+    <div className="synonymListContainer">
+      <ul>
+        {synonyms.map((synonym, index) => (
+          <li key={index} className="synonymItem">{synonym}</li>
+        ))}
+      </ul>
+    </div>
+  </div>
+)}
             {/* Display phonetic and audio if available */}
             {definition.phonetics && definition.phonetics.length > 0 && definition.phonetics[0].audio && (
               <div>
@@ -146,23 +154,9 @@ const fetchSynonyms = async (word) => {
           </div>
         )}
   
-        <div>
-          <h3>Your Favorites</h3>
-          {favorites.length > 0 ? (
-            <ul>
-              {favorites.map((favorite, index) => (
-                <li key={index}>
-                  {favorite} 
-                  <button onClick={() => removeFromFavorites(favorite)}>Remove</button>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>No favorite words yet!</p>
-          )}
+  <RecentSearches onSelect={handleRecentClick} />
         </div>
-        </div>
-        <RecentSearches onSelect={handleRecentClick} />
+      
       </section>
     );
   };

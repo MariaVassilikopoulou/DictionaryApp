@@ -36,10 +36,10 @@ $input-focus-border-color: $highlight-color;
   background-color: $white-color;
   padding: 30px;
   border-radius: 10px;
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10 px 15px rgba(0, 0, 0, 0.1);
   animation: slideIn 0.8s ease-out;
   box-sizing: border-box;
-  overflow: hidden;
+  
 }
 
 /*@keyframes slideIn {
@@ -109,6 +109,27 @@ button {
   color: $error-color;
   font-size: 16px;
   margin-top: 20px;
+}
+
+.synonymListContainer {
+  overflow-y: auto;
+  max-height: 100px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scroll-behavior: smooth; /* Firefox */
+  &::-webkit-scrollbar {
+    width: 6px;
+    
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $highlight-color;
+    border-radius: 4px;
+  }
+}
+
+.synonymItem {
+  padding: 0.25rem 0;
+  font-size: 0.95rem;
 }
 
 .synonyms-list {

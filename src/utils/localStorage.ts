@@ -7,4 +7,26 @@ export const saveSearchTerm = (term: string) => {
   export const getRecentSearches = (): string[] => {
     return JSON.parse(localStorage.getItem("recentSearches") || "[]");
   };
+ 
+  
+  export const getFavorites = (): string[] => {
+    return JSON.parse(localStorage.getItem('favorites') || '[]');
+  };
+  
+  export const saveFavorite = (word: string): string[] => {
+    const favorites = getFavorites();
+    if (!favorites.includes(word)) {
+      const updated = [...favorites, word];
+      localStorage.setItem('favorites', JSON.stringify(updated));
+      return updated;
+    }
+    return favorites;
+  };
+  
+  export const removeFavorite = (word: string): string[] => {
+    const favorites = getFavorites();
+    const updated = favorites.filter(item => item !== word);
+    localStorage.setItem('favorites', JSON.stringify(updated));
+    return updated;
+  };
   
