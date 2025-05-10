@@ -155,12 +155,16 @@ button {
 
 .toast-container {
   position: fixed;
-  bottom: 20px;
-  left: 49%;
+  right:10%;
+  left: 45%;
+  transform: translateX(-33%);
+ /* bottom: 20px;
+  left: 50%;
   transform: translateX(-50%);
   z-index: 9999;
   pointer-events: none;
   border: 1px solid $input-border-color;
+  background-color: pink;*/
 }
 
 .toast {

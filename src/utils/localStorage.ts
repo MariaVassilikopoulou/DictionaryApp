@@ -30,3 +30,10 @@ export const saveSearchTerm = (term: string) => {
     return updated;
   };
   
+
+  export function removeRecentSearch(term: string): string[] {
+    const stored = getRecentSearches().filter(item => item !== term);
+    localStorage.setItem("recentSearches", JSON.stringify(stored));
+    return stored;
+  }
+  

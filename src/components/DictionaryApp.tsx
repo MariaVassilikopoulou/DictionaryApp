@@ -23,7 +23,7 @@ const DictionaryApp = () => {
   const [error, setError] = useState<string | null>(null);;
   const [synonyms, setSynonyms]= useState<string[]>([]);
   const [favorites, setFavorites] = useState<string[]>([]);
-
+  const [refreshTrigger, setRefreshTrigger] = useState<number>(0);
   useEffect(() => {
     setFavorites(getFavorites());
   }, []);
@@ -48,6 +48,7 @@ const fetchSynonyms = async (word) => {
       return;
     }
     saveSearchTerm(word.trim());
+    setRefreshTrigger(prev => prev + 1)
     try { setError(null);
     setDefinition(null);
 
@@ -158,7 +159,8 @@ const fetchSynonyms = async (word) => {
   
         <RecentSearches onSelect={handleRecentClick} 
                   favorites={favorites}
-                  onRemoveFavorite={removeFromFavorites}/>
+                  onRemoveFavorite={removeFromFavorites}
+                  refreshTrigger={refreshTrigger}/>
         </div>
       </section>
     );
