@@ -12,9 +12,9 @@ const Favorites = ({ favorites, onRemove }: Props) => {
       {favorites.length > 0 ? (
         <ul>
           {favorites.map((favorite, index) => (
-            <li key={index}>
+            <li key={index}  className="favorite-item">
               {favorite}
-              <button onClick={() => onRemove(favorite)}>Remove</button>
+              <button className= "buttonX" onClick={() => onRemove(favorite)}> ✖️</button>
             </li>
           ))}
         </ul>
