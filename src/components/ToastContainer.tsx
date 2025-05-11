@@ -1,7 +1,15 @@
 import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import '../styles/App.scss'
-const ToastContainer = ({ message, onClose }) => {
+
+type Props = {
+    message: string | null;
+    onClose: () => void;
+    type?: 'success' | 'error';
+  };
+
+
+const ToastContainer = ({ message, onClose, type = 'success' }: Props) => {
   useEffect(() => {
     if (message) {
       const timer = setTimeout(() => {
@@ -12,11 +20,11 @@ const ToastContainer = ({ message, onClose }) => {
   }, [message, onClose]);
   if (!message) return null;
   return (
-    <div className="toast-container">
-      <AnimatePresence>
+    <div className={`toast-container`}>
+      <AnimatePresence >
         {message && (
           <motion.div
-            className="toast"
+            className={`toast ${type}`} onClick={onClose}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}

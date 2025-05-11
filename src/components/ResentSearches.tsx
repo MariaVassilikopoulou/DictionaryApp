@@ -29,9 +29,6 @@ const RecentSearches = ({ onSelect, favorites, onRemoveFavorite ,refreshTrigger 
   };
 */
 
-
-
- 
     
     return (
       <div className="accordion-wrapper">

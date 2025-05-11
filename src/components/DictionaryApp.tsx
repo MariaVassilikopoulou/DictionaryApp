@@ -6,6 +6,7 @@ import ToastContainer from './ToastContainer';
 import RecentSearches from "./ResentSearches";
 
 
+
 type Definition = {
   word: string;
   phonetics?: { text?: string; audio?: string }[];
@@ -24,6 +25,10 @@ const DictionaryApp = () => {
   const [synonyms, setSynonyms]= useState<string[]>([]);
   const [favorites, setFavorites] = useState<string[]>([]);
   const [refreshTrigger, setRefreshTrigger] = useState<number>(0);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+
+
   useEffect(() => {
     setFavorites(getFavorites());
   }, []);
@@ -84,6 +89,8 @@ const fetchSynonyms = async (word) => {
    const addToFavorites = (word: string) => {
     const updated = saveFavorite(word);
     setFavorites(updated);
+    setSuccessMessage(`"${word}" added to favorites!`);
+     setTimeout(() => setSuccessMessage(null), 3000);
   };
   
     
@@ -100,9 +107,25 @@ const fetchSynonyms = async (word) => {
     fetchWordDefinition();
   };
 
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
+  
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+  };
+
   return (
     <section className='container'>
     <div>
+    <button
+      className="theme-toggle"
+      onClick={toggleTheme}
+      title="Toggle Theme"
+    >
+    {theme === 'light' ? '🌙' : '☀️'}
+    </button>
       <motion.div className="title" initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 0.5 }}>
         <h1>Dictionary App</h1>
       </motion.div>
@@ -115,8 +138,8 @@ const fetchSynonyms = async (word) => {
         
         <button onClick={fetchWordDefinition}>Search</button>
        
-        <ToastContainer message={error} onClose={() => setError(null)} />
-
+        <ToastContainer  message={error} onClose={() => setError(null)} type="error" />
+        <ToastContainer message={successMessage} onClose={() => setSuccessMessage(null)} type="success" />
         {definition && (
           <div data-testid="wordDefinition">
             <h2>{definition.word}</h2>
@@ -156,7 +179,6 @@ const fetchSynonyms = async (word) => {
             <button onClick={() => addToFavorites(definition.word)}>Add to Favorites</button>
           </div>
         )}
-  
         <RecentSearches onSelect={handleRecentClick} 
                   favorites={favorites}
                   onRemoveFavorite={removeFromFavorites}
