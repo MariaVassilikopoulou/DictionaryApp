@@ -256,3 +256,11 @@ button {
     }
   
   }
+
+@media (max-width: 480px) {
+  .theme-toggle {
+   
+    left:120px;
+    font-size: 1.2rem;
+  }
+}
