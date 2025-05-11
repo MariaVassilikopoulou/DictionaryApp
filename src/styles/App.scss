@@ -39,12 +39,13 @@ $input-focus-border-color: $highlight-color;
   min-height: 100vh;
   overflow-y: auto;
   width: 100vw;
-  background-color: $background-color;
+  background-color:var(--card-color);
   padding: 20px;
   //overflow: hidden;
   box-sizing: border-box;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   position: relative;
+
 }
 
 .container div {
@@ -148,13 +149,14 @@ button {
 .synonymItem {
   padding: 0.25rem 0;
   font-size: 0.95rem;
+
 }
 
 .synonyms-list {
   margin-top: 20px;
 
   h3 {
-    color: $primary-color;
+    color: var(--text-color);
     font-size: 1.2rem;
   }
 
@@ -165,7 +167,7 @@ button {
 
     li {
       font-size: 16px;
-      color: #333;
+      color: var(--text-color);
       margin-bottom: 5px;
       &:hover {
         color: $secondary-color;
@@ -185,7 +187,16 @@ button {
     max-width: 300px;
   }
 }
+@media (max-width: 480px) {
+  .audio-player {
+    margin-top: 15px;
+    padding: 0 10px;
 
+    audio {
+      max-width: 100%; 
+    }
+  }
+}
 
  /* .toast-container {
  // position: fixed;
